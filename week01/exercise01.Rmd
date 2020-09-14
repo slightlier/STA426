@@ -1,0 +1,64 @@
+---
+title: "STA 426 - Week 1"
+author: "David Wissel"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output: bookdown::html_document2
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = getwd())
+```
+
+# Setup
+```{r bookkeeping, message=FALSE}
+library(tidyverse)
+theme_set(theme_minimal())
+mu <- 1
+sigma <- 0.25
+n <- 1e2
+seed <- 42
+decimal_places <- 3
+# Found through trial and error to make histograms look presentable
+bin_width <- 0.18  
+```
+
+We set the parameters explicitly such that we can easily modify them and change them later if a different distribution was desired. We then simulate the data:
+
+```{r sim}
+set.seed(seed)
+dat <- data.frame(x = rlnorm(n, mu, sigma))
+```
+
+
+# Histograms
+We shall use `ggplot2` to display histograms of both the original data and the log-transformed data.
+
+## Non-transformed data
+
+
+```{r hist, fig.cap = paste("Histogram of", n, "randomly generated observations from a log normal distribution with mean =", mu, "and sigma =", sigma)}
+dat %>% 
+  ggplot(aes(x)) +
+  geom_histogram(binwidth = bin_width)
+```
+
+
+We can see in Figure \@ref(fig:hist) that the histogram of the untransformed data takes the skewed shape of a log-normal distribution.
+
+## Log-transformed histogram
+
+
+```{r histtrans, fig.cap = paste("Histogram of the log transformation of", n, "randomly generated observations from a log normal distribution with mean =", mu, "and sigma =", sigma)}
+dat %>%
+  log %>%
+  ggplot(aes(x)) +
+  geom_histogram(binwidth = bin_width)
+```
+
+
+As expected, Figure \@ref(fig:histtrans) shows that after log-transforming the data, the histogram takes (roughly) the shape of a normal distribution with mean `r mu` and standard deviation `r sigma`.
+
+# Calculations
+By using the functions `mean` and `var`, we can calculate that the mean and variance of the sample are `r round(mean(dat$x), decimal_places)` and `r round(var(dat$x), decimal_places)` respectively (each rounded to `r decimal_places` decimal places).
