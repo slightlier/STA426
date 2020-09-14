@@ -9,11 +9,6 @@ All official course material can be found on the [official repo](https://github.
 ## Misc
 Unfortunately, Github flavored MD does not support $\LaTeX$ :/ But we can show  `print("inline code")`, so we (mostly) have everything we need for documentation! For syntax highlighting however, we need to use codeblocks (and unfortunately Github flavored MD does not seem to support syntax highlighting for R, although local MD usually does).
 
-```R
-library(bioconductor)
-library(tidyverse)
-```
-
 ```py
 import lifelines
 import pystan
