@@ -21,7 +21,7 @@ n <- 1e2
 seed <- 42
 decimal_places <- 3
 # Found through trial and error to make histograms look presentable
-bin_width <- 0.18  
+bin_width <- 0.18
 ```
 
 We set the parameters explicitly such that we can easily modify them and change them later if a different distribution was desired. We then simulate the data:
@@ -39,9 +39,11 @@ We shall use `ggplot2` to display histograms of both the original data and the l
 
 
 ```{r hist, fig.cap = paste("Histogram of", n, "randomly generated observations from a log normal distribution with mean =", mu, "and sigma =", sigma)}
-dat %>% 
+p <- dat %>%
   ggplot(aes(x)) +
   geom_histogram(binwidth = bin_width)
+
+p
 ```
 
 
@@ -51,10 +53,7 @@ We can see in Figure \@ref(fig:hist) that the histogram of the untransformed dat
 
 
 ```{r histtrans, fig.cap = paste("Histogram of the log transformation of", n, "randomly generated observations from a log normal distribution with mean =", mu, "and sigma =", sigma)}
-dat %>%
-  log %>%
-  ggplot(aes(x)) +
-  geom_histogram(binwidth = bin_width)
+p + scale_x_log10(name = "log(x)")
 ```
 
 
